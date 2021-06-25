@@ -1,11 +1,22 @@
 const express = require("express");
 const { Mtoken } = require("./Mtoken.js");
 const axios = require('axios');
+const fetch = require('node-fetch');
 const app = express();
 
 const port = process.env.PORT || 3000;
 let aldata = [];
 let sinceId = "";
+
+const tobase64 = async(url) => {
+    fetch(url).then(res => res.buffer()).then(images =>{
+        const b64 = images.toString('base64');
+        console.log(b64);
+    })
+}
+
+tobase64("https://msk.seppuku.club/files/79553a35-ae80-4eae-b343-25cc56fbdb1b").then(res => {console.log(res);});
+
 
 const getbodydata = (iffirst,id) => {
     let bodydata = "";
