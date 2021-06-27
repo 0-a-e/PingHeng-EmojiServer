@@ -12,11 +12,13 @@ let sinceId = "";
 
 const addbase64 = async (d) => {
     await  d.forEachAsync(async function (data, index, d) {
-        const base64data = await tobase64(data["url"]);    
-        data["base64"] = base64data;
         data["index"] = index;
-        alldata.push(data);
-        console.log("dd");
+        await tobase64(data["url"]).then(
+            base64data => {
+            data["base64"] = base64data;
+            alldata.push(data);
+            console.log("added");
+        });
     });
     console.log("end loop");
     return "ok";
@@ -24,8 +26,8 @@ const addbase64 = async (d) => {
 
 const tobase64 = async(url) => {
     const rwd = await fetch(url);
-    const bfr = rwd.buffer();
-    const b64 = bfr.toString('base64');
+    const bfr = await rwd.buffer();
+    const b64 = await bfr.toString('base64');
     return b64;
 }
 
