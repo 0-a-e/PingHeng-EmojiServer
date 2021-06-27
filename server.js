@@ -17,7 +17,6 @@ const addbase64 = async (d) => {
             base64data => {
             data["base64"] = base64data;
             alldata.push(data);
-            console.log("added");
         });
     });
     console.log("end loop");
