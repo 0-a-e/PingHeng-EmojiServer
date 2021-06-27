@@ -2,20 +2,32 @@ const express = require("express");
 const { Mtoken } = require("./Mtoken.js");
 const axios = require('axios');
 const fetch = require('node-fetch');
+require('array-foreach-async');
 const app = express();
 
 const port = process.env.PORT || 3000;
 let aldata = [];
+let alldata = [];
 let sinceId = "";
 
-const tobase64 = async(url) => {
-    fetch(url).then(res => res.buffer()).then(images =>{
-        const b64 = images.toString('base64');
-        console.log(b64);
-    })
+const addbase64 = async (d) => {
+    await  d.forEachAsync(async function (data, index, d) {
+        const base64data = await tobase64(data["url"]);    
+        data["base64"] = base64data;
+        data["index"] = index;
+        alldata.push(data);
+        console.log("dd");
+    });
+    console.log("end loop");
+    return "ok";
 }
 
-tobase64("https://msk.seppuku.club/files/79553a35-ae80-4eae-b343-25cc56fbdb1b").then(res => {console.log(res);});
+const tobase64 = async(url) => {
+    const rwd = await fetch(url);
+    const bfr = rwd.buffer();
+    const b64 = bfr.toString('base64');
+    return b64;
+}
 
 
 const getbodydata = (iffirst,id) => {
@@ -76,7 +88,10 @@ app.get("/", async(req, res) => {
         if(r){
             sinceId = r;
         } else {
-            res.status(200).send(aldata);
+            const d = aldata;
+            addbase64(d).then(n => {
+                res.status(200).send(alldata)
+            });
             break;
         }
     }
