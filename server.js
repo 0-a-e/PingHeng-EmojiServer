@@ -10,6 +10,9 @@ let aldata = [];
 let alldata = [];
 let sinceId = "";
 
+//aldataは取得そのまま
+//alldataはindxとbase64追加
+
 const addbase64 = async (d) => {
     await  d.forEachAsync(async function (data, index, d) {
         data["index"] = index;
@@ -29,7 +32,6 @@ const tobase64 = async(url) => {
     const b64 = await bfr.toString('base64');
     return b64;
 }
-
 
 const getbodydata = (iffirst,id) => {
     let bodydata = "";
@@ -91,11 +93,12 @@ app.get("/", async(req, res) => {
         } else {
             const d = aldata;
             addbase64(d).then(n => {
-                res.status(200).send(alldata)
+                res.status(200).send(alldata);
             });
             break;
         }
     }
+    alldata = [];
     aldata = [];
     sinceId = "";
 });

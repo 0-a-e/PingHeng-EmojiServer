@@ -1,6 +1,6 @@
-# PingHeng-emojiServer
+# PingHeng-emojiServer（開発中止）
 
-[PingHeng](https://github.com/0-a-e/Pingheng)用の絵文字と認証サーバーです。
+~~[PingHeng](https://github.com/0-a-e/Pingheng)用絵文字サーバーです~~(アプリで絵文字が取得できたので開発中止)。
 
 取得した絵文字のリストにインデックスと画像データ(base64)を加えて返します。
 

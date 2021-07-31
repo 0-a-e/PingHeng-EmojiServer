@@ -1,0 +1,32 @@
+<body>
+<input type="text" id="txt">
+<button onclick="parseEmoji()">テスト</button>
+</body>
+<script>
+    
+const parseEmoji = () => {
+  let element = document.getElementById('txt');
+  const str = element.value;
+  let returntext = [];
+  const regexp = /:["']?([a-zA-Z0-9_\.\/\-]+)["']?\:/g;
+  let matches = [];
+  while ((match = regexp.exec(str))!== null) {
+    matches.push(match[1]);
+  }
+  //matchesは絵文字エスケープのリスト　(::なし)
+  //matchesをループ
+   //Remojinameは::付の絵文字エスケープ(str)
+   //imageComは画像タグ（入れ替え先
+   //2回目はリストの前後、3回目はリストの中からも探し出さなきゃ?
+  matches.forEach(function(emojiname, index) {
+    const Remojiname = ":" + emojiname  + ":";
+    const imageCom = "<Image source={{uri: 'http://s3.hilariousgifs.com/displeased-cat.jpg'}} />";
+    returntext = str.split(Remojiname);
+  });
+  console.log(returntext);
+}
+
+
+
+
+</script>
